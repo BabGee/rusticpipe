@@ -1,0 +1,63 @@
+{% load static %}
+{% load cart_template_tags %}
+
+
+<!-- Header section -->
+<header class="header-section">
+	<div class="header-top">
+		<div class="container">
+			<div class="row">
+				<!-- <div class="col-lg-2 text-center text-lg-left">
+					logo 
+					<a href="/" class="site-logo">
+						<img src="{% static 'pizzaweb/img/logo.png' %}" alt="">
+					</a>
+				</div>-->
+				<div class="col-xl-6 col-lg-5 text-lg-left">
+					<form class="header-search-form" action="{% url 'search_results' %}" method="get">
+						<input name="qproduct" type="text" placeholder="Search on Rustic Pipe Bistro & Lemon Lounge....">
+						<button type="submit"><i class="flaticon-search"></i></button>
+					</form>
+				</div>
+				<div class="col-xl-6 col-lg-5 text-lg-right">
+					<div class="user-panel">
+						{% if not user.is_authenticated %}
+						<div class="up-item">
+							<i class="flaticon-profile"></i>
+							<a href="{% url 'pizza-login' %}">Sign</a> In or <a href="{% url 'pizza-register' %}">Create Account</a>
+						</div>
+						{% else %}
+						<div class="up-item">
+							<div class="shopping-card">
+								<i class="flaticon-bag"></i>
+								<span>{{ request.user|cart_product_count }}</span>
+							</div>
+							<a href="{% url 'order-summary' %}">Shopping Cart</a>
+						</div>
+						<div class="up-item">
+							<i class="flaticon-profile"></i>
+							<a href="{% url 'pizza-logout' %}">Logout</a>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="main-navbar">
+		<div class="container">
+			<!-- menu -->
+			<ul class="main-menu">
+				<li><a href="{% url 'pizza-index' %}">Home</a></li>
+				{% for category in categories %}
+				<li><a href="{% url 'category-detail' pk=category.pk %}"> {{category.name}}</a></li>
+				{% endfor %}
+				<li><a href="{% url 'contact' %}">Contact</a></li>
+			</ul>
+		</div>
+	</nav>
+</header>
+<!-- Header section end -->
+
+
+

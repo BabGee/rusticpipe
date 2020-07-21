@@ -1,0 +1,175 @@
+{% extends 'pizzaweb/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} Rustic Pipe | Lemon Lounge {% endblock %}
+
+{% block content %}
+
+	<!-- Hero section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+			{% for product in offer_products %}
+			<div class="hs-item set-bg" data-setbg="{{product.image.url}}">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-6 col-lg-7 text-white">
+							<span>Today's Offers</span>
+							<h2>{{product.title}}</h2>
+							<p>{{product.description}} </p>
+							<a href="{% url 'product-detail' slug=product.slug %}" class="site-btn sb-line">DISCOVER</a>
+							<a href="{{ product.get_add_to_cart_url }}" class="site-btn sb-white">ADD TO CART</a>
+						</div>
+					</div>
+					<div class="product-card text-white">
+						<!-- <span>OFFER Price</span> -->
+						<h2>Kshs {{product.price |intcomma}}</h2>
+						<a href="{{ product.get_add_to_cart_url }}">
+							<p>ORDER NOW</p>
+						</a>	
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		<div class="container">
+			<div class="slide-num-holder" id="snh-1"></div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+
+	<!-- Features section -->
+	<section class="features-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'pizzaweb/img/icons/1.png' %}" alt="#">
+						</div>
+						<h2>Fast Secure Payments</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'pizzaweb/img/icons/2.png' %}" alt="#">
+						</div>
+						<h2>YUMMY FOOD</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'pizzaweb/img/icons/3.png' %}" alt="#">
+						</div>
+						<h2>Free & fast Delivery</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Features section end -->
+
+	<!-- latest product section -->
+	<section class="top-letest-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>RUSTIC PIPE BISTRO</h2>
+			</div>
+			<div class="product-slider owl-carousel">
+				{% for new_product in rusticpipe_products %}
+				<div class="product-item">
+					<div class="pi-pic">
+						<a href="{% url 'product-detail' slug=new_product.slug %}">
+							<img class="card-img-top img-fluid" src="{{new_product.image.url}}" alt="" height="409" width="264">
+						</a>
+						<div class="pi-links">
+							<a href="{{ new_product.get_add_to_cart_url }}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>
+							{% if new_product.discount_price %}
+								<span class="mr-1">
+									<del>Kshs {{ new_product.price|intcomma }}</del>
+								</span>
+								<span>Kshs {{ new_product.discount_price|intcomma }}</span>
+							{% else %}
+								<span>Kshs {{ new_product.price|intcomma }}</span>
+							{% endif %}
+						</h6>
+						<p>{{new_product.title}} </p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- latest product section end -->
+
+	<!-- Product filter section -->
+	<section class="product-filter-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>LEMON LOUNGE</h2>
+			</div>
+			<ul class="product-filter-menu">
+				{% for category in categoriess %}
+				<li><a href="{% url 'category-detail' pk=category.pk %}">{{category.name}}</a></li>
+				{% endfor %}
+			</ul>
+			<div class="row">
+				{% for product in lemonlounge_products %}
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item">
+						<div class="pi-pic">
+							<div class="tag-new">{{product.category}}</div>
+							<a href="{% url 'product-detail' slug=product.slug %}">
+								<img class="card-img-top img-fluid" src="{{product.image.url}}" alt="" height="409" width="264">
+							</a>
+							<div class="pi-links">
+								<a href="{{ product.get_add_to_cart_url }}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>
+								{% if product.discount_price %}
+								<span class="mr-1">
+									<del>Kshs {{ product.price|intcomma }}</del>
+								</span>
+								<span>Kshs {{ product.discount_price|intcomma }}</span>
+								{% else %}
+								<span>Kshs {{ product.price|intcomma }}</span>
+								{% endif %}
+							</h6>
+							<p>{{product.title}} </p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<a href="{% url 'pizza-menu' %}">
+				<div class="text-center pt-5">
+					<button class="site-btn sb-line sb-dark">LOAD MORE</button>
+				</div>
+			</a>
+		</div>
+	</section>
+	<!-- Product filter section end -->
+
+
+	<!-- Banner section -->
+	<section class="banner-section">
+		<div class="container">
+			<div class="banner set-bg" data-setbg="{{new_product.image.url}}">
+				<div class="tag-new">RPB & Lemon Lounge</div>
+				<span>Welcome to:</span>
+				<h2>Rustic Pipe & Lemon Lounge</h2>
+				<a href="{% url 'pizza-menu' %}" class="site-btn">FULL MENU</a>
+			</div>
+		</div>
+	</section>
+	<!-- Banner section end  -->
+
+	{% endblock content %}
